@@ -35,6 +35,23 @@ li{margin:4px 0}
 .video{display:inline-block;margin-top:18px;background:var(--red);color:#fff;text-decoration:none;font-weight:700;padding:12px 18px;border-radius:12px}
 .video:hover{filter:brightness(1.1)}
 .note{margin-top:22px;font-size:.85rem;color:var(--mut);text-align:center}
+.game{margin-top:16px;border:2px dashed var(--bd);border-radius:14px;padding:14px}
+.game h4{margin:0 0 4px;font-size:1.05rem}
+.hint{margin:0 0 10px;color:var(--mut);font-size:.9rem}
+.pool{display:grid;gap:8px}
+.chip{background:var(--bg);color:var(--tx);border:2px solid var(--bd);border-radius:10px;padding:10px 12px;font:inherit;text-align:left;cursor:pointer}
+.chip:hover{border-color:var(--red)}
+.done{margin:0 0 10px;padding-left:24px}
+.done li{background:var(--okbg);border-radius:8px;padding:6px 10px;margin:4px 0}
+.row{display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap;border:2px solid var(--bd);border-radius:10px;padding:8px 10px;margin:6px 0}
+.row.ok{background:var(--okbg);border-color:var(--ok)}
+.row.ko{background:var(--nobg);border-color:var(--no)}
+.row span{flex:1 1 220px}
+.row button{font:inherit;font-size:.9rem;font-weight:700;border:2px solid var(--bd);background:var(--card);color:var(--tx);border-radius:8px;padding:6px 12px;cursor:pointer}
+.row button:disabled{opacity:.4;cursor:default}
+.msg{min-height:1.4em;font-weight:700;margin:8px 0}
+.g-ok{color:var(--ok)}.g-ko{color:var(--no)}
+.rst{font:inherit;background:none;border:1px solid var(--bd);color:var(--mut);border-radius:8px;padding:4px 10px;cursor:pointer}
 </style>
 </head>
 <body>
@@ -97,9 +114,55 @@ const T = [
 {e:"🚑",n:"Accidents",lead:"Accidents de trànsit, domèstics o esportius: la prioritat és la seguretat.",
  sig:["Vehicles o objectes en perill","Víctimes inconscients o atrapades","Risc de foc, electricitat o nous cops"],
  what:["<b>Protegeix:</b> senyalitza, apaga el motor, no t’exposis al perill.","<b>Avisa</b> el 112 amb la ubicació exacta (carretera, punt quilomètric).","Comprova si els ferits responen i respiren.","Aplica només els primers auxilis necessaris (hemorràgia, RCP).","Tranquil·litza els ferits fins que arribi l’ajuda."],
- yes:["Posar-se un armilla reflectant","Mantenir els ferits abrigats","Esperar els serveis d’emergència"],no:["Treure el casc a un motorista","Moure els ferits sense necessitat","Donar-los beure o menjar"],
+ yes:["Posar-se una armilla reflectant","Mantenir els ferits abrigats","Esperar els serveis d’emergència"],no:["Treure el casc a un motorista","Moure els ferits sense necessitat","Donar-los beure o menjar"],
  video:yt("accident-protegir-alertar-socorrer")}
 ];
+const strip=s=>s.replace(/<[^>]+>/g,"");
+const shuf=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+function games(t){
+  const g=document.getElementById("games");
+  g.innerHTML=`<h3>🎮 Posa’t a prova</h3><div class="game" id="g1"></div><div class="game" id="g2"></div>`;
+  orderGame(t,document.getElementById("g1"));
+  sortGame(t,document.getElementById("g2"));
+}
+function orderGame(t,el){
+  const steps=t.what.map(strip);let n=0;
+  el.innerHTML=`<h4>1. Ordena els passos</h4><p class="hint">Toca els passos en l’ordre correcte, del primer a l’últim.</p><ol class="done"></ol><div class="pool"></div><p class="msg"></p><button class="rst">↺ Torna-ho a provar</button>`;
+  const done=el.querySelector(".done"),pool=el.querySelector(".pool"),msg=el.querySelector(".msg");
+  function start(){
+    n=0;done.innerHTML="";pool.innerHTML="";msg.textContent="";
+    shuf(steps.map((s,i)=>[s,i])).forEach(([s,i])=>{
+      const b=document.createElement("button");b.className="chip";b.textContent=s;
+      b.onclick=()=>{
+        if(i===n){n++;const l=document.createElement("li");l.textContent=s;done.appendChild(l);b.remove();
+          msg.className="msg g-ok";msg.textContent=n===steps.length?"🎉 Perfecte! Ordre correcte.":"";}
+        else{msg.className="msg g-ko";msg.textContent="❌ Aquest pas no toca ara. Torna-ho a pensar.";}
+      };
+      pool.appendChild(b);
+    });
+  }
+  el.querySelector(".rst").onclick=start;start();
+}
+function sortGame(t,el){
+  el.innerHTML=`<h4>2. Relaciona: sí o no?</h4><p class="hint">Aquesta acció s’ha de fer (✅ Sí) o s’ha d’evitar (❌ No)?</p><div class="items"></div><p class="msg"></p><button class="rst">↺ Torna-ho a provar</button>`;
+  const box=el.querySelector(".items"),msg=el.querySelector(".msg");
+  function start(){
+    box.innerHTML="";msg.textContent="";let ok=0,err=0;
+    const items=shuf([...t.yes.map(x=>[x,1]),...t.no.map(x=>[x,0])]);
+    items.forEach(([txt,val])=>{
+      const r=document.createElement("div");r.className="row";
+      r.innerHTML=`<span>${txt}</span><div><button>✅ Sí</button> <button>❌ No</button></div>`;
+      const [bs,bn]=r.querySelectorAll("button");
+      [[bs,1],[bn,0]].forEach(([b,v])=>b.onclick=()=>{
+        if(v===val){r.className="row ok";bs.disabled=bn.disabled=true;ok++;
+          if(ok===items.length){msg.className="msg g-ok";msg.textContent="🎉 Fet! Errors: "+err;}else msg.textContent="";}
+        else{err++;r.className="row ko";msg.className="msg g-ko";msg.textContent="❌ Torna-ho a provar.";}
+      });
+      box.appendChild(r);
+    });
+  }
+  el.querySelector(".rst").onclick=start;start();
+}
 const menu=document.getElementById("menu"), panel=document.getElementById("panel");
 const li=a=>a.map(x=>"<li>"+x+"</li>").join("");
 function show(i){
@@ -111,7 +174,8 @@ function show(i){
    +(t.extra?`<p>${t.extra}</p>`:"")
    +`<div class="cols"><div class="box ok"><h3>✅ Sí</h3><ul>${li(t.yes)}</ul></div><div class="box no"><h3>❌ No</h3><ul>${li(t.no)}</ul></div></div>`
    +`<a class="video" href="${t.video}" target="_blank" rel="noopener">${t.vl||"▶ Veure el vídeo (Canal Salut)"}</a>`
-   +(t.video2?` <a class="video" href="${t.video2}" target="_blank" rel="noopener">▶ Maniobres de RCP (Canal Salut)</a>`:"");
+   +(t.video2?` <a class="video" href="${t.video2}" target="_blank" rel="noopener">▶ Maniobres de RCP (Canal Salut)</a>`:"")+`<div id="games"></div>`;
+  games(t);
 }
 T.forEach((t,i)=>{const b=document.createElement("button");b.setAttribute("aria-pressed","false");b.innerHTML=`<span class="e">${t.e}</span>${t.n}`;b.onclick=()=>show(i);menu.appendChild(b)});
 show(0);
