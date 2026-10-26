@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Primers auxilis · 3r d’ESO</title>
+<style>
+:root{--bg:#f7f8fa;--card:#fff;--tx:#1d2330;--mut:#5b6475;--red:#d62839;--redbg:#fde8ea;--ok:#177245;--okbg:#e4f5ec;--no:#9b2226;--nobg:#fdecec;--bd:#e1e5ec;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#13161c;--card:#1b2029;--tx:#eef1f6;--mut:#a3adbf;--red:#ff5a6a;--redbg:#3a1c21;--ok:#5fd394;--okbg:#17301f;--no:#ff8b8f;--nobg:#351b1d;--bd:#2c3340}}
+:root[data-theme="dark"]{--bg:#13161c;--card:#1b2029;--tx:#eef1f6;--mut:#a3adbf;--red:#ff5a6a;--redbg:#3a1c21;--ok:#5fd394;--okbg:#17301f;--no:#ff8b8f;--nobg:#351b1d;--bd:#2c3340}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{background:var(--red);color:#fff;padding:28px 20px;text-align:center}
+header h1{margin:0 0 6px;font-size:clamp(1.6rem,5vw,2.4rem)}
+header p{margin:0 auto;max-width:640px;opacity:.95}
+.sos{display:inline-block;margin-top:14px;background:#fff;color:#d62839;font-weight:800;padding:8px 18px;border-radius:999px;font-size:1.1rem}
+main{max-width:980px;margin:0 auto;padding:20px 16px 40px}
+nav{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:20px}
+nav button{background:var(--card);color:var(--tx);border:2px solid var(--bd);border-radius:14px;padding:12px 8px;font:inherit;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px}
+nav button .e{font-size:1.7rem}
+nav button[aria-pressed="true"]{border-color:var(--red);background:var(--redbg)}
+nav button:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+article{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:22px}
+article h2{margin:0 0 8px;font-size:1.6rem}
+.lead{color:var(--mut);margin:0 0 16px}
+h3{margin:18px 0 6px;font-size:1.05rem}
+ol,ul{margin:0;padding-left:22px}
+li{margin:4px 0}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:16px}
+.box{border-radius:12px;padding:12px 16px}
+.box h3{margin-top:0}
+.ok{background:var(--okbg)} .ok h3{color:var(--ok)}
+.no{background:var(--nobg)} .no h3{color:var(--no)}
+.video{display:inline-block;margin-top:18px;background:var(--red);color:#fff;text-decoration:none;font-weight:700;padding:12px 18px;border-radius:12px}
+.video:hover{filter:brightness(1.1)}
+.note{margin-top:22px;font-size:.85rem;color:var(--mut);text-align:center}
+</style>
+</head>
+<body>
+<header>
+  <h1>🩹 Primers auxilis</h1>
+  <p>Aprenem què fer davant les emergències més habituals. Saber actuar pot salvar una vida.</p>
+  <span class="sos">📞 Emergències: 112</span>
+</header>
+<main>
+  <nav id="menu" aria-label="Temes"></nav>
+  <article id="panel" aria-live="polite"></article>
+  <p class="note">Material educatiu per a 3r d’ESO. No substitueix un curs de primers auxilis impartit per professionals.</p>
+</main>
+<script>
+// Per canviar un vídeo: substitueix el camp "video" pel link concret de YouTube.
+const CS = "https://canalsalut.gencat.cat/ca/videosalut/temes/primers-auxilis/"; // Vídeo Salut (Canal Salut)
+const yt = s => CS + (s ? s + "/" : "");
+const T = [
+{e:"🧭",n:"Conducta PAS",lead:"Abans d’ajudar, cal seguir sempre tres passos: Protegir, Avisar i Socórrer.",
+ what:["<b>Protegir:</b> comprova que el lloc és segur per a tu, per a la víctima i per als altres.","<b>Avisar:</b> truca al <b>112</b>. Digues on ets, què ha passat, quantes víctimes hi ha i com estan. No pengis fins que t’ho diguin.","<b>Socórrer:</b> comprova si la persona respon i respira, i aplica els primers auxilis que has après."],
+ yes:["Mantenir la calma","Donar la teva ubicació exacta","Tranquil·litzar la víctima"],no:["Posar-te en perill","Moure la víctima si no cal","Donar-li menjar o beure"],
+ video:yt("accident-protegir-alertar-socorrer")},
+{e:"🩸",n:"Hemorràgies",lead:"Pèrdua de sang d’un vas sanguini. Pot ser externa (es veu) o interna (no es veu).",
+ sig:["Sang visible que raja o raja a espurnes","Pal·lidesa, suor freda, set, pols ràpid i dèbil","Marejos o pèrdua de coneixement"],
+ what:["Posa’t guants o una bossa de plàstic a les mans si pots.","Fes <b>pressió directa</b> sobre la ferida amb una gasa o un drap net.","Si l’apòsit s’amara, no el treguis: n’hi poses un altre a sobre.","Eleva el membre ferit si no hi ha fractura.","Truca al 112 si la sang no para o és abundant."],
+ yes:["Pressionar fort i de manera contínua","Estirar la víctima","Embenar sense tallar la circulació"],no:["Treure objectes clavats","Rentar una ferida que sagna molt","Posar cotó directament a la ferida"],
+ extra:"<b>Hemorràgia nasal:</b> seu, inclina el cap cap endavant i pessiga el nas durant 10 minuts. No inclinis el cap cap enrere."
+ ,video:yt("hemorragia")},
+{e:"❤️",n:"Aturada cardiorespiratòria",lead:"El cor deixa de bombar sang i la persona deixa de respirar. Cada minut compta.",
+ sig:["No respon quan la cridem o la sacsegem suaument","No respira o només fa boquejades","No té moviment"],
+ what:["Crida fort demanant ajuda i truca al <b>112</b> (o demana que ho faci algú).","Demana un <b>DEA</b> (desfibril·lador) si n’hi ha a prop.","Comença la <b>RCP</b>: mans al centre del pit, braços rectes, <b>30 compressions</b> fondes (5-6 cm) a un ritme de 100-120 per minut.","Si saps fer-ho, dona <b>2 insuflacions</b> i continua 30 compressions + 2 insuflacions.","Quan arribi el DEA, encén-lo i segueix les instruccions de veu."],
+ yes:["Continuar fins que arribi l’ajuda","Deixar que el DEA et guiï","Fer compressions fortes i ràpides"],no:["Aturar-te sense motiu","Tenir por de fer mal: sense RCP no té possibilitats","Tocar la víctima mentre el DEA analitza"],
+ video:yt("aturada-cardiaca-reanimacio-cardiopulmonar-desfibrillador"),video2:yt("maniobres-reanimacio-cardiopulmonar")},
+{e:"😵",n:"Pèrdua de coneixement",lead:"La persona deixa de respondre i no reacciona als estímuls. Pot ser breu (un desmai) o prolongada.",
+ sig:["No respon quan la cridem o la sacsegem suaument","Té els ulls tancats i el cos tou","Pot respirar amb normalitat o no respirar"],
+ what:["Comprova que no hi ha perill i crida-la fort mentre li sacseges suaument les espatlles.","Si no respon, demana ajuda i truca al <b>112</b>.","Obre la via aèria: inclina-li el cap enrere i aixeca-li la barbeta.","Comprova la respiració durant 10 segons (mira, escolta i sent).","Si respira: posa-la en <b>Posició Lateral de Seguretat (PLS)</b> i vigila-la fins que arribi l’ajuda.","Si no respira amb normalitat: comença la <b>RCP</b>."],
+ yes:["Vigilar la respiració contínuament","Abrigar-la","Posar-la en PLS si respira"],no:["Donar-li menjar o beure","Deixar-la d’esquena si no respon (la llengua pot tapar la via aèria)","Deixar-la sola"],
+ extra:"Si recupera el coneixement ràpidament (desmai), ajeu-la amb les cames elevades, afluixa-li la roba i avisa igualment un adult o un professional sanitari."
+ ,video:yt("posicio-lateral-seguretat")},
+{e:"☠️",n:"Intoxicacions",lead:"Entrada al cos d’una substància nociva: per la boca, pell, ulls o inhalació.",
+ sig:["Nàusees, vòmits o dolor abdominal","Mal alè o taques a la boca","Somnolència, confusió, convulsions","Envàs buit o producte a prop"],
+ what:["Allunya la persona de la font (gas, fums) si és segur.","Truca al <b>112</b> o al Servei d’Informació Toxicològica: <b>91 562 04 20</b>.","Digues quin producte és, quant ha pres i quan. Guarda l’envàs.","Si és a la pell o als ulls, renta amb aigua abundant 15 minuts.","Si està inconscient i respira, posa’l en PLS."],
+ yes:["Tenir l’envàs a mà","Seguir les indicacions telefòniques","Vigilar-ne la respiració"],no:["Provocar el vòmit","Donar llet o aliments","Donar medicaments sense indicació"],
+ video:yt("intoxicacio")},
+{e:"😮‍💨",n:"Ennuegament",lead:"Un objecte o aliment bloqueja les vies respiratòries i la persona s’ennuega.",
+ sig:["Es porta les mans al coll","No pot parlar ni respirar bé","Cara vermella o morada"],
+ what:["Si tus amb força, anima’l a continuar tossint.","Si no pot respirar ni tossir: dona-li <b>5 cops forts</b> a l’esquena, entre les espatlles.","Si no funciona: <b>5 compressions abdominals</b> (maniobra de Heimlich), des de darrere, amb els punys sota l’esternó.","Alterna 5 cops i 5 compressions i truca al 112.","Si perd el coneixement, comença la RCP."],
+ yes:["Actuar ràpid","Comprovar la boca només si veus l’objecte","Estar atent si queda inconscient"],no:["Donar-li aigua","Fer-li córrer o ficar-li els dits a cegues","Donar cops si pot tossir sol"],
+ video:yt("ennuegament")},
+{e:"🔥",n:"Cremades",lead:"Lesions de la pell per calor, productes químics o electricitat.",
+ sig:["Vermellor i dolor (1r grau)","Butllofes (2n grau)","Pell blanca o negra, poc dolor (3r grau, greu)"],
+ what:["Aparta la persona de la font de calor.","Refreda amb <b>aigua tèbia o fresca</b> durant 10-20 minuts.","Treu anells i rellotges abans que s’inflin.","Cobreix amb un drap net i humit o gasa.","Truca al 112 si és gran, a la cara o a les mans, o si és de 3r grau."],
+ yes:["Aigua abundant","Cobrir amb gasa neta","Anar al metge si és greu"],no:["Posar gel directament","Foradar butllofes","Treure la roba enganxada ni aplicar pasta de dents o oli"],
+ video:yt("cremada")},
+{e:"🦴",n:"Traumatismes",lead:"Cops que causen lesions: contusions, esquinços, luxacions, fractures o cop al cap.",
+ sig:["Dolor intens i inflor","Deformitat o impossibilitat de moure","Hematoma o morat","Cop al cap: vòmits, somnolència o confusió"],
+ what:["Deixa la persona quieta i en una posició còmoda.","<b>Immobilitza</b> la zona tal com està, sense reduir-la.","Aplica fred embolicat amb un drap durant 15 minuts.","Eleva el membre si és possible.","Si sospites lesió de coll o d’esquena o cop fort al cap: <b>no el moguis</b> i truca al 112."],
+ yes:["Fred amb un drap entremig","Immobilitzar","Controlar-ne la consciència"],no:["Posar el membre al lloc","Moure una víctima amb lesió a l’esquena","Aplicar gel directament"],
+ vl:"▶ Veure tots els vídeos de primers auxilis (Canal Salut)",video:yt("")},
+{e:"🚑",n:"Accidents",lead:"Accidents de trànsit, domèstics o esportius: la prioritat és la seguretat.",
+ sig:["Vehicles o objectes en perill","Víctimes inconscients o atrapades","Risc de foc, electricitat o nous cops"],
+ what:["<b>Protegeix:</b> senyalitza, apaga el motor, no t’exposis al perill.","<b>Avisa</b> el 112 amb la ubicació exacta (carretera, punt quilomètric).","Comprova si els ferits responen i respiren.","Aplica només els primers auxilis necessaris (hemorràgia, RCP).","Tranquil·litza els ferits fins que arribi l’ajuda."],
+ yes:["Posar-se un armilla reflectant","Mantenir els ferits abrigats","Esperar els serveis d’emergència"],no:["Treure el casc a un motorista","Moure els ferits sense necessitat","Donar-los beure o menjar"],
+ video:yt("accident-protegir-alertar-socorrer")}
+];
+const menu=document.getElementById("menu"), panel=document.getElementById("panel");
+const li=a=>a.map(x=>"<li>"+x+"</li>").join("");
+function show(i){
+  const t=T[i];
+  [...menu.children].forEach((b,j)=>b.setAttribute("aria-pressed",j===i));
+  panel.innerHTML=`<h2>${t.e} ${t.n}</h2><p class="lead">${t.lead}</p>`
+   +(t.sig?`<h3>Com la reconeixem?</h3><ul>${li(t.sig)}</ul>`:"")
+   +`<h3>Com actuem?</h3><ol>${li(t.what)}</ol>`
+   +(t.extra?`<p>${t.extra}</p>`:"")
+   +`<div class="cols"><div class="box ok"><h3>✅ Sí</h3><ul>${li(t.yes)}</ul></div><div class="box no"><h3>❌ No</h3><ul>${li(t.no)}</ul></div></div>`
+   +`<a class="video" href="${t.video}" target="_blank" rel="noopener">${t.vl||"▶ Veure el vídeo (Canal Salut)"}</a>`
+   +(t.video2?` <a class="video" href="${t.video2}" target="_blank" rel="noopener">▶ Maniobres de RCP (Canal Salut)</a>`:"");
+}
+T.forEach((t,i)=>{const b=document.createElement("button");b.setAttribute("aria-pressed","false");b.innerHTML=`<span class="e">${t.e}</span>${t.n}`;b.onclick=()=>show(i);menu.appendChild(b)});
+show(0);
+</script>
+</body>
+</html>
